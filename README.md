@@ -4,7 +4,7 @@
 
 A custom [stylelint](https://github.com/stylelint/stylelint) rule to catch usage of `@import` statement underscores or filename extensions.
 
-This rule will cause stylelint to warn you whenever `@import` include leading filenames underscores or filename extensions.
+This rule will cause stylelint to error or warn you whenever `@import` include leading filenames underscores or filename extensions. It will also do it if there are some plain CSS imports (they are [claimed to be bad for performance](https://gtmetrix.com/avoid-css-import.html)).
 
 ## Installation
 
@@ -16,7 +16,7 @@ This plugin is compatible with v5.0.1+.
 
 ## Details
 
-There are 2 options: `allowUnderscore` (true|false), `allowExtension` (true|false).
+There are 3 options: `allowUnderscore` (true|false), `allowExtension` (true|false), `allowCssImports` (true|false).
 
 With default (no options specified):
 ```css
@@ -27,6 +27,9 @@ With default (no options specified):
 @import('path/variables); /* OK */
 
 @import('variables.scss); /* Not OK */
+@import('variables); /* OK */
+
+@import('variables.css); /* Not OK */
 @import('variables); /* OK */
 ```
 
@@ -39,6 +42,12 @@ With `allowUnderscore: true`:
 With `allowExtension: true`:
 ```css
 @import('variables.scss); /* OK */
+```
+
+With `allowCssImports: false`:
+```css
+@import('variables.css); /* Not OK */
+@import('variables); /* OK */
 ```
 
 ## Usage
@@ -55,7 +64,8 @@ As follows:
   "rules": {
     "at-rule-import-path": [true, {
       allowUnderscore: [true|false],
-      allowExtension: [true|false]
+      allowExtension: [true|false],
+      allowCssImports: [true|false]
     }]
   }
 };
