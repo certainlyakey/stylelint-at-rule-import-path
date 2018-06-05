@@ -53,7 +53,7 @@ module.exports = stylelint.createPlugin(ruleName, (enabled, options) =>
         });
       }
       if (enabled && (!hasOptions || (hasOptions && !opts.allowExtension)) &&
-        fileName.indexOf('.') > -1) {
+        (fileName.indexOf('.scss') > -1 || fileName.indexOf('.sass') > -1 || fileName.indexOf('.styl') > -1 || fileName.indexOf('.css') > -1 || fileName.indexOf('.less') > -1)) {
         stylelint.utils.report({
           ruleName: ruleName,
           result: result,
